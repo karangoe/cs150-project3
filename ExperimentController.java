@@ -90,7 +90,6 @@ public class ExperimentController {
 
     private void process(){
         Truck truck = new Truck(center);
-
         while(true){
             //System.out.println("We're at: "+ truck.location.name);
             boolean changesLocation = false;
@@ -111,7 +110,7 @@ public class ExperimentController {
                 }
                 truck.setLocation(possibleWH.city);
                 changesLocation = true;
-                System.out.println("Deliver to warehouse "+ possibleWH.city.getName()+" total weight: "+totalWeight+" dist "+wh.getShortestPath().get(i));
+                System.out.println("Deliver to warehouse "+ possibleWH.city.getName() + " total weight: "+totalWeight+" dist "+wh.getShortestPath().get(i));
                 break;
             }
             if(!changesLocation){
