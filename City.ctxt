@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=City
+comment1.params=n
+comment1.target=City(java.lang.String)
+comment2.params=v
+comment2.target=int\ compareTo(City)
+comment3.params=
+comment3.target=Warehouse\ getWarehouse()
+comment4.params=wh
+comment4.target=void\ setWarehouse(Warehouse)
+numComments=5
