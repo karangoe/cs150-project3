@@ -29,4 +29,9 @@ public class Truck
     public void addCargo(int cargo){
         cargos.add(cargo);
     }
+    
+    /**
+     * A method that gets the location of the truck
+     */
+    
 }

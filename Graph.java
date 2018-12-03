@@ -56,7 +56,7 @@ public class Graph {
         while(!q.isEmpty()){
             City u = q.poll();
             if (u.visited) continue;
-            if(u.name.compareTo(start.name)!=0 && u.isWarehouse)
+            if(u.getName().compareTo(start.getName())!=0 && u.isWarehouse)
                 start.getWarehouse().addOtherWarehouse(u.getWarehouse(), u.dist);
             u.visited = true;
             for(int i=0;i<u.nbs.size();i++){

@@ -8,7 +8,7 @@
 import java.util.*;
 
 public class City implements Comparable<City> {
-    String name;
+    private String name;
     List<Road> nbs = new ArrayList<Road>();
     int dist = Integer.MAX_VALUE;
     boolean visited = false;
@@ -42,5 +42,13 @@ public class City implements Comparable<City> {
     public void setWarehouse(Warehouse wh){
         this.warehouse = wh;
         this.isWarehouse = true;
+    }
+    
+    /**
+     * A method that gets the name of the city
+     * @return name of the city
+     */
+    public String getName() {
+        return this.name;
     }
   }

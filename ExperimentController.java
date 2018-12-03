@@ -95,8 +95,8 @@ public class ExperimentController {
             //System.out.println("We're at: "+ truck.location.name);
             boolean changesLocation = false;
             Warehouse wh = truck.location.getWarehouse();            
-            for(int i=0;i<wh.otherWarehouses.size();i++){
-                Warehouse possibleWH = wh.otherWarehouses.get(i);
+            for(int i=0;i<wh.getOtherWareHouses().size();i++){
+                Warehouse possibleWH = wh.getOtherWareHouses().get(i);
                 //System.out.println("possible warehouse: "+wh.otherWarehouses.get(i).city.name+" with distance "+wh.shortestPath.get(i));
                 //System.out.println(possibleWH.cargos.size());
                 if(possibleWH.isEmpty()) continue;
@@ -111,13 +111,13 @@ public class ExperimentController {
                 }
                 truck.location = possibleWH.city;
                 changesLocation = true;
-                System.out.println("Deliver to warehouse "+ possibleWH.city.name+" total weight: "+totalWeight+" dist "+wh.shortestPath.get(i));
+                System.out.println("Deliver to warehouse "+ possibleWH.city.getName()+" total weight: "+totalWeight+" dist "+wh.shortestPath.get(i));
                 break;
             }
             if(!changesLocation){
-                if(truck.location.name.equals(center.name)) break;
-                for(int i=0;i<truck.location.getWarehouse().otherWarehouses.size();i++){
-                    if((truck.location.getWarehouse().otherWarehouses.get(i)).city.name.compareTo(center.name)==0){
+                if(truck.location.getName().equals(center.getName())) break;
+                for(int i=0;i<truck.location.getWarehouse().getOtherWareHouses().size();i++){
+                    if((truck.location.getWarehouse().getOtherWareHouses().get(i)).city.getName().compareTo(center.getName())==0){
                         truck.distTraveled -= truck.location.getWarehouse().shortestPath.get(i);
                         truck.location = center;
                         truck.weightLeft=500;
