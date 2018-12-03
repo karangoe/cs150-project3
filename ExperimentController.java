@@ -8,8 +8,8 @@
 
 import java.util.*;
 import java.io.*;
-public class ExperimentController
-{
+
+public class ExperimentController {
 
     private ArrayList<Warehouse> warehouse = new ArrayList<Warehouse>();
     private City center;
@@ -61,7 +61,7 @@ public class ExperimentController
             Warehouse wh = new Warehouse(c, null, g);
             wh.setIsCenter(true);
             warehouse.add(wh);
-            center = g.getVertex(c);
+            center = g.getCity(c);
             (center).setWarehouse(wh);
         }
         catch(Exception e){
@@ -79,7 +79,7 @@ public class ExperimentController
                     cargos.add(Integer.parseInt(arr[j]));
                 }
                 Warehouse wh = new Warehouse(arr[0], cargos, g);
-                (g.getVertex(arr[0])).setWarehouse(wh);
+                (g.getCity(arr[0])).setWarehouse(wh);
                 warehouse.add(wh);
             }
         }

@@ -1,3 +1,10 @@
+/**
+ * Write a description of class Graph here.
+ *
+ * @author (Elene Karangozishvili & Trang Le)
+ * @version (Dec 02, 2018)
+ */
+
 import java.util.*;
 import java.io.*;
 
@@ -5,16 +12,27 @@ public class Graph {
 
     Map<String, City> vertexMap = new HashMap<String, City>(); 
 
-    /* add an undirected edge */
+    /**
+     * A method that adds an undirected edge
+     *
+     * @param  start  name of the starting vertex
+     * @param  end    name of the destination vertex
+     * @param  weight distance between the vertices 
+     */
     public void addEdge(String start, String end, int w) {
-        City u = getVertex(start);
-        City v = getVertex(end);
+        City u = getCity(start);
+        City v = getCity(end);
         u.nbs.add(new Road(u, v, w));
         v.nbs.add(new Road(v, u, w));
     }
 
-    // retrieve vertex associated with the given name
-    public City getVertex(String name) {
+    /**
+     * A method that retrieves a city associated with a name
+     *
+     * @param  name  name of the city
+     * @return the city with the name
+     */
+    public City getCity(String name) {
         City v = vertexMap.get(name);
         //System.out.println(v+" "+name);
         if (v == null) {
@@ -25,6 +43,10 @@ public class Graph {
         return v;
     }
 
+    /**
+     * Dijkstra algorithm
+     *
+     */
     public void dijkstra(City start)
     {
         reset(start);
@@ -49,7 +71,8 @@ public class Graph {
             }
         }
     }
-
+    
+    //reset helper for Dijkstra
     private void reset(City start){
         Deque<City> q = new ArrayDeque<City>();
         q.add(start);
@@ -71,105 +94,5 @@ public class Graph {
         }
     }
 
-            // /* run a BFS form a given start vertex */
-            // public void bfs(Vertex startVertex) {
-            // Deque<Vertex> q = new ArrayDeque<Vertex>();
-            // q.add(startVertex);
-            // startVertex.dist = 0;
+}
 
-            // while (!q.isEmpty()) {
-            // Vertex u = q.poll();
-            // System.out.println(u.name + " " +u.dist);
-            // for (Edge e: u.nbs) {
-            // Vertex v = e.v;
-            // if (v.dist == Integer.MAX_VALUE) {
-            // q.add(v);
-            // v.dist = u.dist+1;
-            // }
-            // }
-
-            // }
-            // }
-
-            // /* run a DFS from a given start vertex */
-            // public void dfs(Vertex startVertex) {
-            // Deque<Vertex> s = new ArrayDeque<Vertex>();
-            // s.push(startVertex);
-            // startVertex.visited = true;
-            // while (!s.isEmpty()) {
-            // Vertex u = s.pop();
-            // System.out.println(u.name);
-            // for (Edge e: u.nbs) {
-            // Vertex v = e.v;
-            // if (!v.visited) {
-            // s.push(v);
-            // v.visited = true;
-            // }
-            // }
-            // }
-            // }
-
-            // /* run a recursive DFS from a given vertex */
-            // public void recursiveDfs(Vertex u) {
-            // u.visited = true;
-            // System.out.println(u.name);
-            // for (Edge e: u.nbs) {
-            // Vertex v = e.v;
-            // if (!v.visited) recursiveDfs(v);
-            // }
-
-            // }
-
-            // /* find the shortest path from the given start vertex */
-            // public void shortestPath(Vertex startVertex) {
-            // reset();
-            // PriorityQueue<Vertex> q = new PriorityQueue<Vertex>();
-            // q.add(startVertex);
-            // startVertex.dist = 0;
-
-            // while (!q.isEmpty()) {
-            // Vertex u = q.poll();
-            // if (u.visited) continue;
-            // u.visited = true;
-            // System.out.println(u.name + " " + u.dist + " " + ((u.prev==null)?"":u.prev.name));
-            // for (Edge e: u.nbs) {
-            // Vertex v = e.v;
-            // if (v.dist > u.dist + e.w) {
-            // v.dist = u.dist + e.w;
-            // v.prev = u;
-            // q.add(v);
-            // }
-            // }
-            // }
-            // }
-
-            // /* reset the parameters of all vertices */
-            // public void reset() {
-            // for (Vertex v: vertexMap.values()) {
-            // v.dist = Integer.MAX_VALUE;
-            // v.visited = false;
-            // v.prev = null;
-            // }
-            // }
-
-            // public static void main(String[] args) throws IOException {
-            // Scanner in = new Scanner(new FileReader("graph1.txt"));
-
-            // Graph g = new Graph();
-
-            // while (in.hasNextLine()) {
-            // String[] line = in.nextLine().split(" ");
-            // if (line.length == 3) { // weighted graph
-            // int w = Integer.parseInt(line[2]);
-            // g.addEdge(line[0], line[1], w);
-            // } else {
-            // g.addEdge(line[0], line[1], 1);
-            // }
-            // }
-
-            // g.shortestPath(g.getVertex("A"));
-            // }
-
-        }
-
-    

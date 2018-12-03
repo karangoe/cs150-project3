@@ -21,6 +21,11 @@ public class Truck
         location = _location;
     }
 
+    /**
+     * A method that add a cargo onto the truck
+     *
+     * @param  cargo  the weight of the cargo added
+     */
     public void addCargo(int cargo){
         cargos.add(cargo);
     }
