@@ -9,7 +9,7 @@ import java.util.*;
 public class Truck
 {
     public int distTraveled = 0;
-    public City location;
+    private City location;
     public int weightLeft = 500;
     private ArrayList<Integer> cargos = new ArrayList<Integer>();
 
@@ -33,5 +33,16 @@ public class Truck
     /**
      * A method that gets the location of the truck
      */
+    public City getLocation() {
+        return this.location;
+    }
+    
+    /**
+     * A method that sets the location of the truck
+     */
+    public void setLocation(City c) {
+        this.location = c;
+    }
+   
     
 }

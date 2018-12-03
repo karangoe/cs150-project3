@@ -94,14 +94,14 @@ public class ExperimentController {
         while(true){
             //System.out.println("We're at: "+ truck.location.name);
             boolean changesLocation = false;
-            Warehouse wh = truck.location.getWarehouse();            
+            Warehouse wh = truck.getLocation().getWarehouse();            
             for(int i=0;i<wh.getOtherWareHouses().size();i++){
                 Warehouse possibleWH = wh.getOtherWareHouses().get(i);
                 //System.out.println("possible warehouse: "+wh.otherWarehouses.get(i).city.name+" with distance "+wh.shortestPath.get(i));
                 //System.out.println(possibleWH.cargos.size());
                 if(possibleWH.isEmpty()) continue;
                 if(possibleWH.cargos.peek()>truck.weightLeft) continue;
-                truck.distTraveled += wh.shortestPath.get(i);
+                truck.distTraveled += wh.getShortestPath().get(i);
                 int totalWeight=0;
                 //System.out.println("weight left: "+truck.weightLeft+" next cargo: "+possibleWH.cargos.peek());
                 while(!possibleWH.cargos.isEmpty() && possibleWH.cargos.peek()<=truck.weightLeft){
@@ -109,17 +109,17 @@ public class ExperimentController {
                     totalWeight += possibleWH.cargos.peek();
                     truck.weightLeft = truck.weightLeft - possibleWH.cargos.poll();
                 }
-                truck.location = possibleWH.city;
+                truck.setLocation(possibleWH.city);
                 changesLocation = true;
-                System.out.println("Deliver to warehouse "+ possibleWH.city.getName()+" total weight: "+totalWeight+" dist "+wh.shortestPath.get(i));
+                System.out.println("Deliver to warehouse "+ possibleWH.city.getName()+" total weight: "+totalWeight+" dist "+wh.getShortestPath().get(i));
                 break;
             }
             if(!changesLocation){
-                if(truck.location.getName().equals(center.getName())) break;
-                for(int i=0;i<truck.location.getWarehouse().getOtherWareHouses().size();i++){
-                    if((truck.location.getWarehouse().getOtherWareHouses().get(i)).city.getName().compareTo(center.getName())==0){
-                        truck.distTraveled -= truck.location.getWarehouse().shortestPath.get(i);
-                        truck.location = center;
+                if(truck.getLocation().getName().equals(center.getName())) break;
+                for(int i=0;i<truck.getLocation().getWarehouse().getOtherWareHouses().size();i++){
+                    if((truck.getLocation().getWarehouse().getOtherWareHouses().get(i)).city.getName().compareTo(center.getName())==0){
+                        truck.distTraveled -= truck.getLocation().getWarehouse().getShortestPath().get(i);
+                        truck.setLocation(center);
                         truck.weightLeft=500;
                         System.out.println("Ends of one road, total distance: ");
                     }

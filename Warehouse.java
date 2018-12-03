@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Warehouse {
     private ArrayList<Warehouse> otherWarehouses;
-    ArrayList<Integer> shortestPath;
+    private ArrayList<Integer> shortestPath;
     PriorityQueue<Integer> cargos;
     City city;
     boolean isCenter = false;
@@ -54,15 +54,23 @@ public class Warehouse {
     public boolean isEmpty(){
         return cargos.isEmpty();
     }
-    
+
     /**
      * A method that gets other warehouses
      * @return the Array List of warehouses
      */
-    
+
     public ArrayList<Warehouse> getOtherWareHouses(){
         return this.otherWarehouses;
     }
-    
 
+    /**
+     * A method that gets other warehouses
+     * @return the Array List of shortest paths
+     */
+
+    public ArrayList<Integer> getShortestPath(){
+        return this.shortestPath;
+    }
+    
 }
