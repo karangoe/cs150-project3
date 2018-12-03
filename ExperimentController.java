@@ -2,8 +2,8 @@
 /**
  * Write a description of class ExperimentController here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author (Elene Karangozishvili & Trang Le)
+ * @version (Dec 02, 2018)
  */
 
 import java.util.*;

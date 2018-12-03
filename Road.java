@@ -1,4 +1,10 @@
-class Road {
+/**
+ * Write a description of class Road here.
+ *
+ * @author (Elene Karangozishvili & Trang Le)
+ * @version (Dec 02, 2018)
+ */
+public class Road {
     City u, v;
     int w;
     
