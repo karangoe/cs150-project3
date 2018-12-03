@@ -2,11 +2,13 @@
 comment0.target=Graph
 comment1.params=start\ end\ w
 comment1.target=void\ addEdge(java.lang.String,\ java.lang.String,\ int)
-comment1.text=add\ an\ undirected\ edge
+comment1.text=\n\ A\ method\ that\ adds\ an\ undirected\ edge\n\n\ @param\ \ start\ \ name\ of\ the\ starting\ vertex\n\ @param\ \ end\ \ \ \ name\ of\ the\ destination\ vertex\n\ @param\ \ weight\ distance\ between\ the\ vertices\ \n
 comment2.params=name
-comment2.target=City\ getVertex(java.lang.String)
+comment2.target=City\ getCity(java.lang.String)
+comment2.text=\n\ A\ method\ that\ retrieves\ a\ city\ associated\ with\ a\ name\n\n\ @param\ \ name\ \ name\ of\ the\ city\n\ @return\ the\ city\ with\ the\ name\n
 comment3.params=start
 comment3.target=void\ dijkstra(City)
+comment3.text=\n\ Dijkstra\ algorithm\n\n
 comment4.params=start
 comment4.target=void\ reset(City)
 numComments=5
