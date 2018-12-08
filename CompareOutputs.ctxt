@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=CompareOutputs
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment1.text=\n\ Compares\ two\ files\ passed\ on\ to\ main.\n\ prints\ the\ number\ of\ the\ line\ where\ the\ files\ were\n\ different\ and\ prints\ what\ are\ in\ the\ file\ in\ that\ line.\n
+numComments=2

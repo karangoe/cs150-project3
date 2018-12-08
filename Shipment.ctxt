@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=Shipment
+comment1.params=_wh\ _traveled
+comment1.target=Shipment(Warehouse,\ int)
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Shipment\n
+comment2.params=c
+comment2.target=void\ addCargo(Cargo)
+comment2.text=\n\ A\ method\ that\ add\ a\ cargo\ to\ the\ shipment\n\n\ @param\ \ cargo\ \ the\ weight\ of\ the\ cargo\ added\n
+comment3.params=
+comment3.target=int\ totalWeight()
+comment3.text=\n\ A\ method\ that\ add\ a\ cargo\ to\ the\ shipment\n\n\ @param\ \ cargo\ \ the\ weight\ of\ the\ cargo\ added\n
+numComments=4

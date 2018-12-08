@@ -1,5 +1,6 @@
+
 /**
- * Write a description of class City here.
+ * City is equivalent to a Vertex in Graph.
  *
  * @author (Elene Karangozishvili & Trang Le)
  * @version (Dec 02, 2018)
@@ -7,34 +8,35 @@
 
 import java.util.*;
 
-public class City implements Comparable<City> {
+class City implements Comparable<City> {
     private String name;
     List<Road> nbs = new ArrayList<Road>();
     int dist = Integer.MAX_VALUE;
     boolean visited = false;
-    boolean isWarehouse = false;
     private Warehouse warehouse = null;
     City prev;
-    
+    boolean isWarehouse = false;
+
     public City(String n) {
-      name = n;
+        name = n;
     }
-    
-    
+
+    /**
+     * An method that overrides the compareTo method
+     */
     @Override
     public int compareTo(City v) {
-      return dist - v.dist;
+        return dist - v.dist;
     }
-    
+
     /**
      * A method that gets the warehouse in a city
      * @return the warehouse placed in the city
      */
-    
     public Warehouse getWarehouse(){
         return this.warehouse;
     }
-    
+
     /**
      * A method that sets up the warehouse in a city
      * @param  wh  the warehouse to be placed in the city
@@ -43,7 +45,7 @@ public class City implements Comparable<City> {
         this.warehouse = wh;
         this.isWarehouse = true;
     }
-    
+
     /**
      * A method that gets the name of the city
      * @return name of the city
@@ -51,4 +53,4 @@ public class City implements Comparable<City> {
     public String getName() {
         return this.name;
     }
-  }
+}

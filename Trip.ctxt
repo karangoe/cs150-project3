@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Trip
+comment1.params=
+comment1.target=Trip()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Trip\n
+comment2.params=wb
+comment2.target=void\ setWayBack(int)
+comment2.text=\n\ A\ method\ that\ sets\ the\ distance\ the\ truck\ \n\ has\ to\ travel\ back\ to\ the\ center\n\n\ @param\ \ wb\ \ the\ distance\ to\ travel\n
+comment3.params=s
+comment3.target=void\ addShipment(Shipment)
+comment3.text=\n\ A\ method\ that\ adds\ a\ shipment\ to\ a\ trip\n\n\ @param\ \ s\ \ the\ shipment\ to\ be\ added\n
+comment4.params=
+comment4.target=int\ totalDistance()
+comment4.text=\n\ A\ method\ that\ calculates\ the\ total\ distance\ \n\ traveled\ in\ a\ trip\n
+numComments=5

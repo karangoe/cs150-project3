@@ -8,34 +8,34 @@
 import java.util.*;
 
 public class Warehouse {
-    private ArrayList<Warehouse> otherWarehouses;
-    private ArrayList<Integer> shortestPath;
-    PriorityQueue<Integer> cargos;
+
+    ArrayList<DistToWarehouse> distances; //List of shortest distances to other warehouses
+    PriorityQueue<Cargo> cargos; //Priority queue of cargos in the warehouse
     City city;
-    boolean isCenter = false;
+    boolean isCenter = false; //Check whether the warehouse is located at the center
 
     /**
      * Constructor for objects of class Warehouse
      */
-    public Warehouse(String name, ArrayList<Integer> _cargos, Graph g)
+
+    public Warehouse(String name, ArrayList<Cargo> _cargos, Graph g)
     {
-        otherWarehouses = new ArrayList<Warehouse>();
-        shortestPath = new ArrayList<Integer>();
-        cargos = new PriorityQueue<Integer>();
+        cargos = new PriorityQueue<Cargo>();
+        distances = new ArrayList<DistToWarehouse>();
         city = g.getCity(name);
         if(_cargos!=null){
-            for(int i=0;i<_cargos.size();i++){
-                cargos.add(_cargos.get(i));
+            for(Cargo _c: _cargos) {
+                Cargo c = _c;
+                cargos.add(c);
             }
         }
     }
 
     /**
      * A method that sets a city as the center
-     * @param b indication of whether the city is the center or not
      */
-    public void setIsCenter(boolean b){
-        isCenter = b;
+    public void makeCenter() {
+        this.isCenter = true;
     }
 
     /**
@@ -43,9 +43,9 @@ public class Warehouse {
      * @param wh the warehouse to be added
      * @param distance the shortest path to the corresponding warehouse
      */
-    public void addOtherWarehouse(Warehouse wh, int distance){
-        otherWarehouses.add(wh);
-        shortestPath.add(distance);
+    public void addOtherDistances(Warehouse wh, int distance){
+        DistToWarehouse dtw = new DistToWarehouse(wh,distance);
+        distances.add(dtw);
     }
 
     /**
@@ -56,21 +56,17 @@ public class Warehouse {
     }
 
     /**
-     * A method that gets other warehouses
-     * @return the Array List of warehouses
+     * A method that returns a string for Dijkstra unit testing
+     * @return ArrayList<String> of shortest paths to other warehouses 
      */
-
-    public ArrayList<Warehouse> getOtherWareHouses(){
-        return this.otherWarehouses;
+    public ArrayList<String> returnString() {
+        ArrayList<String> result = new ArrayList<String>();
+        for(DistToWarehouse dtw : distances) {
+            String str = " ";
+            str = "Warehouse at: " + dtw.wh.city.getName() + " is " + dtw.shortestPath + " dist away.";
+            result.add(str);
+        }
+        return result;
     }
 
-    /**
-     * A method that gets other warehouses
-     * @return the Array List of shortest paths
-     */
-
-    public ArrayList<Integer> getShortestPath(){
-        return this.shortestPath;
-    }
-    
 }

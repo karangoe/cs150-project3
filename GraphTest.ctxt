@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=GraphTest
+comment0.text=\n\ The\ test\ class\ GraphTest.\n\n\ @author\ (Elene\ Karangozishvili\ &\ Trang\ Le)\n\ @version\ (Dec\ 07,\ 2018)\n
+comment1.params=
+comment1.target=GraphTest()
+comment2.params=
+comment2.target=void\ setUp()
+comment2.text=\n\ Sets\ up\ the\ test\ fixture.\n\n\ Called\ before\ every\ test\ case\ method.\n
+comment3.params=
+comment3.target=void\ testGetCity()
+comment4.params=
+comment4.target=void\ testAddEdge()
+comment5.params=
+comment5.target=void\ testDijkstra()
+comment6.params=
+comment6.target=void\ tearDown()
+comment6.text=\n\ Tears\ down\ the\ test\ fixture.\n\n\ Called\ after\ every\ test\ case\ method.\n
+numComments=7

@@ -1,5 +1,5 @@
 /**
- * Write a description of class Graph here.
+ * Graph is the "map" of all cities (vertices) and roads (edges) in Coffeeland.
  *
  * @author (Elene Karangozishvili & Trang Le)
  * @version (Dec 02, 2018)
@@ -34,12 +34,10 @@ public class Graph {
      */
     public City getCity(String name) {
         City v = vertexMap.get(name);
-        //System.out.println(v+" "+name);
         if (v == null) {
             v = new City(name);
             vertexMap.put(name, v);
         }
-        //System.out.println("at get vertex city: "+v+" name: "+v.name);
         return v;
     }
 
@@ -56,13 +54,14 @@ public class Graph {
         while(!q.isEmpty()){
             City u = q.poll();
             if (u.visited) continue;
-            if(u.getName().compareTo(start.getName())!=0 && u.isWarehouse)
-                start.getWarehouse().addOtherWarehouse(u.getWarehouse(), u.dist);
+            if(u.getName().compareTo(start.getName())!=0 && u.isWarehouse) 
+                start.getWarehouse().addOtherDistances(u.getWarehouse(), u.dist);
             u.visited = true;
             for(int i=0;i<u.nbs.size();i++){
                 City v = u.nbs.get(i).v;
                 if (!v.visited) {
                     if (v.dist > u.dist + u.nbs.get(i).w){
+                        q.remove(v);
                         v.dist = u.dist+u.nbs.get(i).w;
                         q.add(v);
                         v.prev = u;
@@ -71,7 +70,7 @@ public class Graph {
             }
         }
     }
-    
+
     //reset helper for Dijkstra
     private void reset(City start){
         Deque<City> q = new ArrayDeque<City>();
@@ -93,6 +92,5 @@ public class Graph {
             }
         }
     }
-
 }
 

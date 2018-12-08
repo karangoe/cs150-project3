@@ -8,122 +8,182 @@
 
 import java.util.*;
 import java.io.*;
+public class ExperimentController
+{
 
-public class ExperimentController {
-
-    private ArrayList<Warehouse> warehouse = new ArrayList<Warehouse>();
+    private ArrayList<Warehouse> warehouse;
     private City center;
-    Graph g = new Graph();
+    Graph g;
+    Truck truck;
+
     /**
      * Constructor for objects of class ExperimentController
      */
-    public ExperimentController()
-    {
+    public ExperimentController() {
+        warehouse = new ArrayList<Warehouse>();
+        g = new Graph();
     }
 
-    public static void main(){
+    public static void main(String[] args){
         ExperimentController exp = new ExperimentController();
         exp.run();
     }
 
     public void run(){
         readInput();
-        for(int i=0;i<warehouse.size();i++){
-            g.dijkstra(warehouse.get(i).city);
-        }
+        runDijkstra();
+        sortDistances();        
         process();
+        writeOutput();
     }
 
+    /**
+     * An method that reads the input files and
+     * processes the contents of the input files to
+     * create the Graph
+     * 
+     */
     public void readInput(){
+        //Read the roads and create vertices (cities) and edges (roads)
         try{
-            Scanner sc = new Scanner(new File("roads.txt"));
+            Scanner sc = new Scanner(new File("roads_large.txt"));
             String line = sc.nextLine();
-            //System.out.println(line);
             int numOfRoads = Integer.parseInt(line);
-            //System.out.println(numOfRoads);
             for(int i=0;i<numOfRoads;i++){
                 line = sc.nextLine();
                 String[] arr = line.split(" ");
                 String city1 = arr[0];
                 String city2 = arr[1];
                 int dist = Integer.parseInt(arr[2]);
-                //System.out.println(city1 + " "+city2+" "+dist);
                 g.addEdge(city1, city2, dist);
             }
         }
         catch(Exception e){
             System.out.println(e);
         }
-        
+
+        //Read the center and sets up the center
         try{
-            Scanner sc = new Scanner(new File("center.txt"));
+            Scanner sc = new Scanner(new File("center_large.txt"));
             String c = sc.nextLine();
+            //Link the city to a coy warehouse with no cargos
             Warehouse wh = new Warehouse(c, null, g);
-            wh.setIsCenter(true);
+            
+            wh.makeCenter();
+            
             warehouse.add(wh);
+            
             center = g.getCity(c);
-            (center).setWarehouse(wh);
+            center.setWarehouse(wh);
         }
         catch(Exception e){
             System.out.println(e);
         }
 
+        //Read the warehouses and set up warehouses
         try{
-            Scanner sc = new Scanner(new File("warehouses.txt"));
-            int numOfWarehouses = Integer.parseInt(sc.nextLine());
+            Scanner sc = new Scanner(new File("warehouses_large.txt"));
+            int numOfWarehouses = Integer.parseInt(sc.nextLine()); //Read number of warehouses from the first line
             for(int i=0;i<numOfWarehouses;i++){
                 String line = sc.nextLine();
                 String[] arr = line.split(" ");
-                ArrayList<Integer> cargos = new ArrayList<Integer>();
+                //Reads the weights of the cargos
+                ArrayList<Cargo> cargos = new ArrayList<Cargo>();
                 for(int j=1;j<arr.length;j++){
-                    cargos.add(Integer.parseInt(arr[j]));
+                    Cargo c = new Cargo(j-1, Integer.parseInt(arr[j]));
+                    cargos.add(c);
                 }
+                //Create a warehouse with each list of cargos
                 Warehouse wh = new Warehouse(arr[0], cargos, g);
-                (g.getCity(arr[0])).setWarehouse(wh);
+                (g.getCity(arr[0])).setWarehouse(wh); //Setting the warehouse into the cities
                 warehouse.add(wh);
             }
         }
-        catch(Exception e){
+        catch(Exception e) {
             System.out.println(e);
         }
     }
 
+    /**
+     * A method that runs the Dijkstra algorithm
+     * on the Graph
+     */
+    private void runDijkstra() {
+        for(Warehouse w: warehouse){
+            g.dijkstra(w.city);
+        }
+    }
+
+    /**
+     * A method that sorts other warehouses by shortest path then by name
+     */
+    private void sortDistances() {
+        for (Warehouse wh:warehouse) {
+            Collections.sort(wh.distances);
+        }
+    }
+
     private void process(){
-        Truck truck = new Truck(center);
+        truck = new Truck(center);
+        Trip trip = new Trip();
         while(true){
-            //System.out.println("We're at: "+ truck.location.name);
             boolean changesLocation = false;
-            Warehouse wh = truck.getLocation().getWarehouse();            
-            for(int i=0;i<wh.getOtherWareHouses().size();i++){
-                Warehouse possibleWH = wh.getOtherWareHouses().get(i);
-                //System.out.println("possible warehouse: "+wh.otherWarehouses.get(i).city.name+" with distance "+wh.shortestPath.get(i));
-                //System.out.println(possibleWH.cargos.size());
+            //System.out.println(truck.getLocation());
+            Warehouse wh = truck.getLocation().getWarehouse(); 
+            for(int i=0;i<wh.distances.size();i++){
+                Warehouse possibleWH = wh.distances.get(i).wh;
                 if(possibleWH.isEmpty()) continue;
-                if(possibleWH.cargos.peek()>truck.weightLeft) continue;
-                truck.distTraveled += wh.getShortestPath().get(i);
-                int totalWeight=0;
-                //System.out.println("weight left: "+truck.weightLeft+" next cargo: "+possibleWH.cargos.peek());
-                while(!possibleWH.cargos.isEmpty() && possibleWH.cargos.peek()<=truck.weightLeft){
-                    //System.out.println("weight left: "+truck.weightLeft+" next cargo: "+possibleWH.cargos.peek());
-                    totalWeight += possibleWH.cargos.peek();
-                    truck.weightLeft = truck.weightLeft - possibleWH.cargos.poll();
+                if(possibleWH.cargos.peek().getWeight()>truck.weightLeft) continue;
+                Shipment s = new Shipment(possibleWH, wh.distances.get(i).shortestPath);
+                while(!possibleWH.cargos.isEmpty() && possibleWH.cargos.peek().getWeight()<=truck.weightLeft){
+                    truck.weightLeft = truck.weightLeft - possibleWH.cargos.peek().getWeight();
+                    s.addCargo(possibleWH.cargos.poll());
                 }
+                trip.addShipment(s);
                 truck.setLocation(possibleWH.city);
                 changesLocation = true;
-                System.out.println("Deliver to warehouse "+ possibleWH.city.getName() + " total weight: "+totalWeight+" dist "+wh.getShortestPath().get(i));
                 break;
             }
             if(!changesLocation){
-                if(truck.getLocation().getName().equals(center.getName())) break;
-                for(int i=0;i<truck.getLocation().getWarehouse().getOtherWareHouses().size();i++){
-                    if((truck.getLocation().getWarehouse().getOtherWareHouses().get(i)).city.getName().compareTo(center.getName())==0){
-                        truck.distTraveled -= truck.getLocation().getWarehouse().getShortestPath().get(i);
+                if(truck.getLocation().getName().compareTo(center.getName())==0) break;
+                for(int i=0; i <truck.getLocation().getWarehouse().distances.size();i++){
+                    if((truck.getLocation().getWarehouse().distances.get(i).wh).city.getName().compareTo(center.getName())==0){
+                        trip.setWayBack(truck.getLocation().getWarehouse().distances.get(i).shortestPath);
                         truck.setLocation(center);
                         truck.weightLeft=500;
-                        System.out.println("Ends of one road, total distance: ");
+                        truck.addTrip(trip);
+                        trip = new Trip();
                     }
                 }
             }
+        }
+    }
+
+    public void writeOutput(){
+        try{
+            PrintWriter printWriter = new PrintWriter(new File("output_large.txt"));
+            int totalDistanceTraveled = 0;
+            for(int i=0;i<truck.getNumOfTrips();i++){
+                Trip trip = truck.getTrips().get(i);
+                printWriter.println("Truck "+ (i+1) +":");
+                for(int j=0;j<trip.shipment.size();j++) {
+                    Shipment shipment = trip.shipment.get(j);
+                    printWriter.print("Deliver to warehouse "+ shipment.wh.city.getName()+" total weight: "+shipment.totalWeight()+" ([");
+                    for(int k=0;k<shipment.cargos.size();k++){
+                        Cargo cargo = shipment.cargos.get(k);
+                        printWriter.print(shipment.wh.city.getName()+"("+cargo.num+"): "+ cargo.getWeight());
+                        if(k!=shipment.cargos.size()-1) printWriter.print(", ");
+                    }
+                    printWriter.println("]) dist: "+shipment.traveled);
+                }
+                printWriter.println("Distance traveled "+trip.totalDistance());
+                totalDistanceTraveled +=trip.totalDistance();
+            }
+            printWriter.println("Total distance traveled: " + totalDistanceTraveled);
+            printWriter.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
         }
     }
 
